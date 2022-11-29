@@ -54,7 +54,7 @@ int main() {
     ReadFile.open("../reads.txt");
     ReadFile<< "SC1\tSC2\tSC3\tSC4\tSC5\tSC6\tSC7\tSC8\tSC9\tSC10\tSC11\tSC12\tSC13\tSC14\tSC15\tSC16\tSC17\tSC18\tSC19\tSC20"<<endl;
 
-    for(int i=0; i < streamers.size()-1; i++){
+    for(int i=0; i < streamers.size(); i++){
         int r1=0,r2=0,r3=0,r4=0,r5=0,r6=0,r7=0,r8=0,r9=0,r10=0,r11=0,r12=0,r13=0,r14=0,r15=0,r16=0,r17=0,r18=0,r19=0,r20=0;
         sepChainOne.insert(streamers.at(i),r1);
         sepChainTwo.insert(streamers.at(i), r2);
