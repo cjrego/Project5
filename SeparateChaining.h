@@ -7,7 +7,8 @@
 #include <optional>
 #include <string>
 #include <vector>
-using std::cout, std::endl, std::function, std::iterator, std::list, std::nullopt, std::optional, std::string, std::vector;
+#include <fstream>
+using std::cout, std::endl, std::function, std::iterator, std::list, std::nullopt, std::optional, std::string, std::vector, std::ofstream;
 
 template<typename Keyable>
 class SeparateChaining {
@@ -68,15 +69,18 @@ public:
 
     // Find
     optional<Keyable> find(string key) const {
+        int read = 0;
         // Hash the key to get an index
         unsigned long index = hornerHash(key);
         // Check each item in the list at the index to see if the key matches
         for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+            ++read;
             if (getKey(*it) == key) {
                 // We found the item
                 return *it;
             }
         }
+        cout<<"\nThere were "<<read<< " reads using separate chaining."<<endl;
         // We didn't find the item
         return nullopt;
     }

@@ -9,7 +9,7 @@
 using std::cout, std::endl, std::function, std::nullopt, std::optional, std::string, std::vector;
 
 template<typename Keyable>
-class LinearProbing {
+class DoubleHash {
 private:
     enum state {EMPTY, FILLED, REMOVED};
     struct hashable {
@@ -25,6 +25,14 @@ private:
         unsigned long hashVal = 0;
         for (char letter : key) {
             hashVal = hashVal * 37 + letter;
+        }
+        return hashVal % tableSize;
+    }
+
+    unsigned long cameronHash(string key) const{
+        unsigned long hashVal = 0;
+        for(char letter : key){
+            hashVal = hashVal*44 + letter - 7;
         }
         return hashVal % tableSize;
     }
@@ -68,7 +76,7 @@ private:
 
 public:
     // Constructor
-    LinearProbing(unsigned long tableSize, function<string(Keyable)> getKey) {
+    DoubleHash(unsigned long tableSize, function<string(Keyable)> getKey) {
         // This will fill the table with default Keyables and EMPTY statuses
         this->tableSize = nextPrime(tableSize);
         table.resize(this->tableSize);
@@ -82,7 +90,9 @@ public:
         string key = getKey(item);
         if (!find(key)) {
             // Hash the key to get an index
-            unsigned long index = hornerHash(key);
+            unsigned long index = hornerHash(key)+ cameronHash(key);
+            if(index >=tableSize)
+                index=index-tableSize;
             // Probe until we find a non-filled index
             while (table[index].status == FILLED) {
                 // Add one to the index for linear probing
@@ -105,10 +115,16 @@ public:
 
     // Find
     optional<Keyable> find(string key) const {
+        int read= 0;
         // Hash the key to get an index
-        unsigned long index = hornerHash(key);
+        unsigned long index = hornerHash(key) + cameronHash(key);
+        if(index >=tableSize)
+            index=index-tableSize;
+        ++read;
         while (table[index].status != EMPTY) {
+            ++read;
             // Check the index to see if the key matches
+            read+=2;
             if (table[index].status == FILLED && getKey(table[index].item) == key) {
                 // We found the item
                 return table[index].item;
@@ -117,6 +133,7 @@ public:
             index += 1;
             index %= tableSize;
         }
+        cout<<"\nDouble hash insert had "<< read<<" reads."<<endl;
         // We didn't find the item
         return nullopt;
     }
@@ -124,7 +141,9 @@ public:
     // Remove
     bool remove(string key) {
         // Hash the key to get an index
-        unsigned long index = hornerHash(key);
+        unsigned long index = hornerHash(key) + cameronHash(key);
+        if(index >=tableSize)
+            index=index-tableSize;
         while (table[index].status != EMPTY) {
             // Check the index to see if the key matches
             if (table[index].status == FILLED && getKey(table[index].item) == key) {
