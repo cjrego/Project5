@@ -59,7 +59,8 @@ private:
         return (n-2);
     }
 
-    void rehash() {
+    void rehash(const int& reads) {
+        int& read = const_cast<int&> (reads);
         // Store a copy of the hash table
         vector<hashable> oldTable = table;
         tableSize = nextPrime(tableSize * 2);
@@ -72,7 +73,7 @@ private:
         // Reinsert all FILLED items
         for (int i = 0; i < oldTable.size(); ++i) {
             if (oldTable[i].status == FILLED) {
-                insert(oldTable[i].item);
+                insert(oldTable[i].item, read);
             }
         }
 
@@ -89,8 +90,8 @@ public:
     }
 
     // Insert
-    void insert(Keyable item) {
-        int read=0;
+    void insert(Keyable item, int& reads) {
+        int& read= const_cast<int&>(reads);
         // Get the key from the item
         string key = getKey(item);
         if (!find(key, read)) {
@@ -110,17 +111,17 @@ public:
                 table[index].status = FILLED;
                 // Rehash when more than half the table is filled
                 if (numItems > tableSize/2) {
-                    rehash();
+                    rehash(read);
                 }
             } else {
                 table[index].status = FILLED;
             }
         }
-        outfile<<read<<"\t";
+        outfile<<read<<",\t";
     }
 
     // Find
-    optional<Keyable> find(string key, int reads) const {
+    optional<Keyable> find(string key, const int& reads) const {
         int& read = const_cast<int&>(reads);
         // Hash the key to get an index
         unsigned long index = hornerHash(key) + cameronHash(key);
@@ -129,12 +130,12 @@ public:
         read++;
         while (table[index].status != EMPTY) {
             // Check the index to see if the key matches
-            read+=2;
+            read++;
             if (table[index].status == FILLED && getKey(table[index].item) == key) {
                 // We found the item
+                read++;
                 return table[index].item;
             }
-            read++;
             // Add one to the index for linear probing
             index += 1;
             index %= tableSize;

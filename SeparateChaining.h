@@ -53,21 +53,18 @@ public:
     }
 
     // Insert
-    bool insert(Keyable item, ofstream& outfile ) {
-        int reads =0;
-       // outfile.open("reads.txt");
+    bool insert(Keyable item, const int& reads) {
+        int& read = const_cast<int&> (reads);
         // Get the key from the item
         string key = getKey(item);
         // If the item is already in the table, do not insert it
-        if (!find(key, reads)) {
+        if (!find(key, read)) {
             // Hash the key to get an index
             unsigned long index = hornerHash(key);
             // Put the item at that index in the table
             table[index].push_back(item);
             return true;
         }
-        outfile<<reads<<"\t";
-        //outfile.close();
         return false;
     }
 

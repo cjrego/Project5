@@ -19,13 +19,12 @@ int main() {
     string file = "../twitchdata-update.csv";
     getDataFromFile(file, streamers);
 
-    const unsigned long TABLE_SIZE = 1000;
+    const unsigned long TABLE_SIZE = 3000;
 /*
     SeparateChaining<int> sepChain(TABLE_SIZE, intToString);
     for(int i =0; i<streamers.size()-1; i++){
         sepChain.insert()
     } */
-    int r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20=0;
 
     SeparateChaining<Streamer> sepChainOne(TABLE_SIZE, ObjToName);
     SeparateChaining<Streamer> sepChainTwo(TABLE_SIZE*2, ObjToName);
@@ -51,31 +50,33 @@ int main() {
     DoubleHash<Streamer> dubChainTen(TABLE_SIZE+101, ObjToWatchTime);
 
     ofstream ReadFile;
+
     ReadFile.open("../reads.txt");
     ReadFile<< "SC1\tSC2\tSC3\tSC4\tSC5\tSC6\tSC7\tSC8\tSC9\tSC10\tSC11\tSC12\tSC13\tSC14\tSC15\tSC16\tSC17\tSC18\tSC19\tSC20"<<endl;
 
     for(int i=0; i < streamers.size()-1; i++){
-        sepChainOne.insert(streamers.at(i),ReadFile);
-        sepChainTwo.insert(streamers.at(i), ReadFile);
-        sepChainThree.insert(streamers.at(i), ReadFile);
-        sepChainFour.insert(streamers.at(i), ReadFile);
-        sepChainFive.insert(streamers.at(i), ReadFile);
-        sepChainSix.insert(streamers.at(i), ReadFile);
-        sepChainSeven.insert(streamers.at(i), ReadFile);
-        sepChainEight.insert(streamers.at(i), ReadFile);
-        sepChainNine.insert(streamers.at(i), ReadFile);
-        sepChainTen.insert(streamers.at(i), ReadFile);
-        dubChainOne.insert(streamers.at(i));
-        dubChainTwo.insert(streamers.at(i));
-        dubChainThree.insert(streamers.at(i));
-        dubChainFour.insert(streamers.at(i));
-        dubChainFive.insert(streamers.at(i));
-        dubChainSix.insert(streamers.at(i));
-        dubChainSeven.insert(streamers.at(i));
-        dubChainEight.insert(streamers.at(i));
-        dubChainNine.insert(streamers.at(i));
-        dubChainTen.insert(streamers.at(i));
-        ReadFile<<endl;
+        int r1=0,r2=0,r3=0,r4=0,r5=0,r6=0,r7=0,r8=0,r9=0,r10=0,r11=0,r12=0,r13=0,r14=0,r15=0,r16=0,r17=0,r18=0,r19=0,r20=0;
+        sepChainOne.insert(streamers.at(i),r1);
+        sepChainTwo.insert(streamers.at(i), r2);
+        sepChainThree.insert(streamers.at(i), r3);
+        sepChainFour.insert(streamers.at(i), r4);
+        sepChainFive.insert(streamers.at(i), r5);
+        sepChainSix.insert(streamers.at(i), r6);
+        sepChainSeven.insert(streamers.at(i), r7);
+        sepChainEight.insert(streamers.at(i), r8);
+        sepChainNine.insert(streamers.at(i), r9);
+        sepChainTen.insert(streamers.at(i), r10);
+        dubChainOne.insert(streamers.at(i),r11);
+        dubChainTwo.insert(streamers.at(i),r12);
+        dubChainThree.insert(streamers.at(i),r13);
+        dubChainFour.insert(streamers.at(i),r14);
+        dubChainFive.insert(streamers.at(i),r15);
+        dubChainSix.insert(streamers.at(i),r16);
+        dubChainSeven.insert(streamers.at(i),r17);
+        dubChainEight.insert(streamers.at(i),r18);
+        dubChainNine.insert(streamers.at(i),r19);
+        dubChainTen.insert(streamers.at(i),r20);
+        ReadFile<<r1<<"  \t"<<r2<<"  \t"<<r3<<"  \t"<<r4<<"  \t"<<r5<<"  \t"<<r6<<"  \t"<<r7<<"  \t"<<r8<<"  \t"<<r9<<"  \t"<<r10<<"   \t"<<r11<<"   \t"<<r12<<"   \t"<<r13<<"   \t"<<r14<<"   \t"<<r15<<"   \t"<<r16<<"   \t"<<r17<<"   \t"<<r18<<"   \t"<<r19<<"   \t"<<r20<<endl;
     }
 
     ReadFile.close();
