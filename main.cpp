@@ -19,7 +19,7 @@ int main() {
     string file = "../twitchdata-update.csv";
     getDataFromFile(file, streamers);
 
-    const unsigned long TABLE_SIZE = 3000;
+    const unsigned long TABLE_SIZE = 1000;
 /*
     SeparateChaining<int> sepChain(TABLE_SIZE, intToString);
     for(int i =0; i<streamers.size()-1; i++){
@@ -27,26 +27,26 @@ int main() {
     } */
 
     SeparateChaining<Streamer> sepChainOne(TABLE_SIZE, ObjToName);
-    SeparateChaining<Streamer> sepChainTwo(TABLE_SIZE*2, ObjToName);
-    SeparateChaining<Streamer> sepChainThree(TABLE_SIZE+250, ObjToName);
-    SeparateChaining<Streamer> sepChainFour(TABLE_SIZE*1.5, ObjToName);
-    SeparateChaining<Streamer> sepChainFive(TABLE_SIZE+101, ObjToName);
+    SeparateChaining<Streamer> sepChainTwo(TABLE_SIZE*+101, ObjToName);
+    SeparateChaining<Streamer> sepChainThree(TABLE_SIZE+937, ObjToName);
+    SeparateChaining<Streamer> sepChainFour(TABLE_SIZE*2.1, ObjToName);
+    SeparateChaining<Streamer> sepChainFive(TABLE_SIZE*2.5, ObjToName);
     SeparateChaining<Streamer> sepChainSix(TABLE_SIZE, ObjToWatchTime);
-    SeparateChaining<Streamer> sepChainSeven(TABLE_SIZE*2, ObjToWatchTime);
-    SeparateChaining<Streamer> sepChainEight(TABLE_SIZE+250, ObjToWatchTime);
-    SeparateChaining<Streamer> sepChainNine(TABLE_SIZE*1.5, ObjToWatchTime);
-    SeparateChaining<Streamer> sepChainTen(TABLE_SIZE+101, ObjToWatchTime);
+    SeparateChaining<Streamer> sepChainSeven(TABLE_SIZE+101, ObjToWatchTime);
+    SeparateChaining<Streamer> sepChainEight(TABLE_SIZE+937, ObjToWatchTime);
+    SeparateChaining<Streamer> sepChainNine(TABLE_SIZE*2.1, ObjToWatchTime);
+    SeparateChaining<Streamer> sepChainTen(TABLE_SIZE*2.5, ObjToWatchTime);
 
 
     DoubleHash<Streamer> dubChainOne(TABLE_SIZE, ObjToName);
-    DoubleHash<Streamer> dubChainTwo(TABLE_SIZE*2, ObjToName);
+    DoubleHash<Streamer> dubChainTwo(TABLE_SIZE*2.1, ObjToName);
     DoubleHash<Streamer> dubChainThree(TABLE_SIZE+250, ObjToName);
-    DoubleHash<Streamer> dubChainFour(TABLE_SIZE*1.5, ObjToName);
+    DoubleHash<Streamer> dubChainFour(TABLE_SIZE*2.5, ObjToName);
     DoubleHash<Streamer> dubChainFive(TABLE_SIZE+101, ObjToName);
     DoubleHash<Streamer> dubChainSix(TABLE_SIZE, ObjToWatchTime);
-    DoubleHash<Streamer> dubChainSeven(TABLE_SIZE*2, ObjToWatchTime);
+    DoubleHash<Streamer> dubChainSeven(TABLE_SIZE*2.1, ObjToWatchTime);
     DoubleHash<Streamer> dubChainEight(TABLE_SIZE+250, ObjToWatchTime);
-    DoubleHash<Streamer> dubChainNine(TABLE_SIZE*1.5, ObjToWatchTime);
+    DoubleHash<Streamer> dubChainNine(TABLE_SIZE*2.5, ObjToWatchTime);
     DoubleHash<Streamer> dubChainTen(TABLE_SIZE+101, ObjToWatchTime);
 
     ofstream ReadFile;

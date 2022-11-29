@@ -53,12 +53,12 @@ public:
     }
 
     // Insert
-    bool insert(Keyable item, const int& reads) {
-        int& read = const_cast<int&> (reads);
+    bool insert(Keyable item, int& reads) {
+        // int& read = const_cast<int&> (reads);
         // Get the key from the item
         string key = getKey(item);
         // If the item is already in the table, do not insert it
-        if (!find(key, read)) {
+        if (!find(key, reads)) {
             // Hash the key to get an index
             unsigned long index = hornerHash(key);
             // Put the item at that index in the table
@@ -69,18 +69,19 @@ public:
     }
 
     // Find
-    optional<Keyable> find(string key, const int& reads) const {
-        int& read = const_cast<int&>(reads);
+    optional<Keyable> find(string key, int& reads) const {
+       //int& read = const_cast<int&>(reads);
         // Hash the key to get an index
         unsigned long index = hornerHash(key);
         // Check each item in the list at the index to see if the key matches
         for (auto it = table[index].begin(); it != table[index].end(); ++it) {
-            ++read;
+            ++reads;
             if (getKey(*it) == key) {
                 // We found the item
                 return *it;
             }
         }
+        // cout << reads << endl;
         //cout<<"\n"<< key<< "had "<<read<< " reads using separate chaining."<<endl;
         // We didn't find the item
         return nullopt;
