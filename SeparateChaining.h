@@ -53,23 +53,27 @@ public:
     }
 
     // Insert
-    bool insert(Keyable item) {
+    bool insert(Keyable item, ofstream& outfile ) {
+        int reads =0;
+       // outfile.open("reads.txt");
         // Get the key from the item
         string key = getKey(item);
         // If the item is already in the table, do not insert it
-        if (!find(key)) {
+        if (!find(key, reads)) {
             // Hash the key to get an index
             unsigned long index = hornerHash(key);
             // Put the item at that index in the table
             table[index].push_back(item);
             return true;
         }
+        outfile<<reads<<"\t";
+        //outfile.close();
         return false;
     }
 
     // Find
-    optional<Keyable> find(string key) const {
-        int read = 0;
+    optional<Keyable> find(string key, const int& reads) const {
+        int& read = const_cast<int&>(reads);
         // Hash the key to get an index
         unsigned long index = hornerHash(key);
         // Check each item in the list at the index to see if the key matches
@@ -80,7 +84,7 @@ public:
                 return *it;
             }
         }
-        cout<<"\nThere were "<<read<< " reads using separate chaining."<<endl;
+        //cout<<"\n"<< key<< "had "<<read<< " reads using separate chaining."<<endl;
         // We didn't find the item
         return nullopt;
     }

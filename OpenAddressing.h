@@ -6,7 +6,9 @@
 #include <optional>
 #include <string>
 #include <vector>
-using std::cout, std::endl, std::function, std::nullopt, std::optional, std::string, std::vector;
+#include <fstream>
+
+using std::cout, std::endl, std::function, std::nullopt, std::optional, std::string, std::vector, std::ofstream;
 
 template<typename Keyable>
 class DoubleHash {
@@ -20,6 +22,8 @@ private:
     unsigned long tableSize;
     function<string(Keyable)> getKey;
     unsigned long numItems;
+
+    ofstream outfile;
 
     unsigned long hornerHash(string key) const {
         unsigned long hashVal = 0;
@@ -86,9 +90,10 @@ public:
 
     // Insert
     void insert(Keyable item) {
+        int read=0;
         // Get the key from the item
         string key = getKey(item);
-        if (!find(key)) {
+        if (!find(key, read)) {
             // Hash the key to get an index
             unsigned long index = hornerHash(key)+ cameronHash(key);
             if(index >=tableSize)
@@ -111,29 +116,29 @@ public:
                 table[index].status = FILLED;
             }
         }
+        outfile<<read<<"\t";
     }
 
     // Find
-    optional<Keyable> find(string key) const {
-        int read= 0;
+    optional<Keyable> find(string key, int reads) const {
+        int& read = const_cast<int&>(reads);
         // Hash the key to get an index
         unsigned long index = hornerHash(key) + cameronHash(key);
         if(index >=tableSize)
             index=index-tableSize;
-        ++read;
+        read++;
         while (table[index].status != EMPTY) {
-            ++read;
             // Check the index to see if the key matches
             read+=2;
             if (table[index].status == FILLED && getKey(table[index].item) == key) {
                 // We found the item
                 return table[index].item;
             }
+            read++;
             // Add one to the index for linear probing
             index += 1;
             index %= tableSize;
         }
-        cout<<"\nDouble hash insert had "<< read<<" reads."<<endl;
         // We didn't find the item
         return nullopt;
     }
