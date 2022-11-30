@@ -50,13 +50,54 @@ If you choose the extra credit option, clearly label the results and analysis in
 ## Report
 Include the following in this section of your README.md file:
 * Information about your data set. You will be assigned a different grader for this project.
+
+The data I used is statistics as well as other forms of information regarding the top 1000 Twitch streamers from 2020. The data itself is taken from Twitch but was uploaded and put together by a user on Kaggle. I used all the data provided in the making of this program. It was downloaded as an excel file but has since been changed into a CSV file for the purpose of this project. The fields within the program are as follows:
+
+* name = a string which signifies the stage name of the streamer
+* watchTime = a string; signifies total minutes consumers watched of the streamer
+* streamTime = an integer which is total number of minutes streamed within the year
+* peakViewers = an integer; highest concurrent view count
+* averageViewers = an integer; average number of viewers per stream
+* followers = an integer; total people following the streamers account
+* followersGained = an integer that signifies number of followers gained over the time period
+* viewsGained = an integer; total views gained compared to prior year
+* partnered = a boolean; if the streamer is partnered with the Twitch service
+* mature = a boolean that states the content rating; if it is mature or not
+* language = a string that says the language spoken during the broadcast
+* Entries are ordered in this order (descending).
+* Peculiarities: watchTime was intended to be an integer. Due to the absurdly long nature of some of the statistics I had to convert these numbers to strings so as to be able to read them.
+
+The reason I chose this data set is because I watch Twitch regularly and, I found it interesting to be able to see the stats of the top major streamers and be able to compare them.
+
+
 * Create graphs for the number of reads for inserting your dataset into all 20 hash tables.
   * Clearly label the graph titles and axes.
   * You may want to graph the average number of reads per insertion, where the x-axis is the initial size of your hash table and the y-axis is the average read count. You can do this in two graphs (one for separate chaining and one for open addressing, where you'll have separate counts for each of the two getKey functions).
+
+![Sum Graph for Reads](Graphs/SumGraphProject5.png)
+
+
+
+![Averages Graph for Reads](Graphs/AverageGraphProject5.png)
+
+
+
 * Using the graphs, analyze how the number of reads change as the hash table size grows.
   * For the open addressing tables that have to rehash, you may also find it helpful to calculate the average reads excluding the one when the rehash takes place (for fairer comparison with the separate chaining tables).
+
+Excluding the data where rehashing occurs, the number of reads goes down as the size of the table grows. This makes sense because the  more new spots the higher the likelihood that the index chosen will be open.
+
 * Determine which getKey function works best on your dataset based on the read counts.
+
+The average amount of iterations for my second key (using the watch time data) surprisingly produces less reads. My guess is due to their being more characters
+in that data type rather than the twitch streamers names. The increased number of characters might provide a higher chance of creating a unique key. Although key 2 is slightly more efficient (a difference in averages of .001 for Separate chaining and .003 for Open Addressing)
+I would use the name key as it provides a much easier read when you print out the table or are trying to look up a specific streamer. Having to associate the number of minutes watched is a lot less user-friendly than it is to search or remove a name.
+
 * Draw conclusions about which hash collision detection method works best on your dataset (separate chaining or open addressing).
+
+Separate chaining works a lot better for my data as it takes an enormous more reads to complete open addressing. Every open addressing hash table has to rehash and in-turn rebuild the table.
+Having to rehash and rebuild the table is not something that effects the efficiency tremendously as we are using such a small amount of data. But, as more and more data gets inserted into our table this
+will have a huge effect on how fast our code will be.
 
 **Note: Any code that was not authored by yourself or the instructor must be cited in your report. This includes the use of concepts not taught in lecture.**
 

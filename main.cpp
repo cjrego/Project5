@@ -79,6 +79,9 @@ int main() {
         ReadFile<<r1<<"  \t"<<r2<<"  \t"<<r3<<"  \t"<<r4<<"  \t"<<r5<<"  \t"<<r6<<"  \t"<<r7<<"  \t"<<r8<<"  \t"<<r9<<"  \t"<<r10<<"   \t"<<r11<<"   \t"<<r12<<"   \t"<<r13<<"   \t"<<r14<<"   \t"<<r15<<"   \t"<<r16<<"   \t"<<r17<<"   \t"<<r18<<"   \t"<<r19<<"   \t"<<r20<<endl;
     }
 
+    sepChainOne.printTable();
+    dubChainOne.printTable();
+
     ReadFile.close();
 
     return 0;
